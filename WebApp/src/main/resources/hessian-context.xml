@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- BeanNameUrlHandlerMapping的作用是，当<bean>的name属性以/开头的时候，映射为url请求。 -->
+    <!-- <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>  -->
+    <bean id="hessianServiceImpl" class="com.ken.service.impl.HessianServiceImpl" />
+    
+    <!-- 使用HessianServiceExporter 将普通bean导出成Hessian服务 -->
+    <bean name="/ihessian.service"
+        class="org.springframework.remoting.caucho.HessianServiceExporter">        
+        <property name="service" ref="hessianServiceImpl" />
+        <!-- Hessian服务的接口 -->
+        <property name="serviceInterface" value="com.ken.service.IHessianService" />
+    </bean>
+
+</beans>
